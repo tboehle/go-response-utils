@@ -1,0 +1,64 @@
+openapi: 3.0.2
+info:
+    title: Example swaggerUI
+    description: ""
+    version: {{.Version}}
+    contact:
+        name: Exampe openAPI
+        url: _
+        email: _
+consumes:
+    - application/json
+produces:
+    - application/json
+servers:
+    - url: {{.BaseURL}}
+      description: Environment ({{.Environment}})
+externalDocs:
+    description: _
+    url: _
+components:
+  schema:
+    SuccessResponse:
+      title: SuccessResponse
+      type: object
+      properties:
+        success:
+          type: boolean
+          value: true
+          description: Describes that the operation was successful
+        payload:
+          oneOf:
+            - type: object
+            - type: array
+          description: Represents the requested reponse data
+      required:
+        - success
+        - payload
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      properties:
+        success:
+          type: boolean
+          value: false
+          description: Describes that the operation failed
+        componentError:
+          $ref: '#/components/schemas/ComponentError'
+      required:
+        - success
+        - componentError
+    ComponentError:
+      title: ComponentError
+      type: object
+      properties:
+        code:
+          type: integer
+          description: Describes the http error status code
+        error:
+          type: string
+          description: Describes the error message or the specific type of an error
+      required:
+        - code
+        - error
+
